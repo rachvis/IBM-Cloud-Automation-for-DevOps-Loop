@@ -1,0 +1,599 @@
+{
+    "products": [
+        {
+            "name": "devops-loop-on-iks",
+            "label": "IBM DevOps Loop on IBM Cloud Kubernetes Service",
+            "product_kind": "solution",
+            "tags": [
+                "devops",
+                "containers",
+                "kubernetes",
+                "cicd",
+                "sdlc",
+                "ibm_created"
+            ],
+            "keywords": [
+                "devops loop",
+                "devops",
+                "iks",
+                "kubernetes",
+                "ci",
+                "cd",
+                "plan",
+                "build",
+                "deploy",
+                "measure",
+                "ibm cloud",
+                "hcl",
+                "sdlc"
+            ],
+            "short_description": "Deploy IBM DevOps Loop — a unified Plan-Code-Build-Test-Release-Deploy-Measure platform — on IBM Cloud Kubernetes Service using Terraform and Helm.",
+            "long_description": "This deployable architecture provisions a production-ready IBM DevOps Loop environment on IBM Cloud Kubernetes Service (IKS). It automates every step of the installation: VPC and cluster provisioning (optional), Emissary-ingress (Ambassador) API gateway setup, custom domain registration, TLS secret management via IBM Secrets Manager, HCL Harbor registry authentication, and the full DevOps Loop Helm chart deployment. Individual capabilities — Plan, Code, Control, Build, Test, Release, Deploy, and Measure — can be selectively enabled or disabled. The architecture also supports integration with IBM watsonx for the Loop Genie AI assistant.",
+            "offering_docs_url": "https://raw.githubusercontent.com/YOUR_ORG/devops-loop-iks-da/main/README.md",
+            "offering_icon_url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0OCIgZmlsbD0iI0ZGODMyQiIvPjxwYXRoIGQ9Ik0yNSA1MCBBMjUgMjUgMCAwIDEgNzUgNTAgQTI1IDI1IDAgMCAxIDI1IDUwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMjUiIHI9IjYiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSI1MCIgY3k9Ijc1IiByPSI2IiBmaWxsPSIjZmZmIi8+PC9zdmc+",
+            "module_info": {},
+            "support_details": "Community supported. Refer to IBM DevOps Loop documentation for product-level support at https://www.ibm.com/docs/en/devops-loop.",
+            "flavors": [
+                {
+                    "label": "New Cluster",
+                    "name": "new-cluster",
+                    "install_type": "fullstack",
+                    "working_directory": "solutions/devops-loop-on-iks",
+                    "usage_template": "module \"devops_loop_on_iks\" {\n  source                    = \"https://cm.globalcatalog.cloud.ibm.com/api/v1-beta/offering/source//${{workingDirectory}}?archive=tgz&catalogID=${{catalogID}}&flavor=${{flavor}}&kind=${{kind}}&name=${{name}}&version=${{version}}\"\n  ibmcloud_api_key          = var.ibmcloud_api_key\n  region                    = var.region\n  prefix                    = var.prefix\n  resource_group_name       = var.resource_group_name\n  devops_loop_domain        = var.devops_loop_domain\n  license_server            = var.license_server\n  hcl_harbor_username       = var.hcl_harbor_username\n  hcl_harbor_cli_secret     = var.hcl_harbor_cli_secret\n  tls_certificate           = var.tls_certificate\n  tls_private_key           = var.tls_private_key\n}\n",
+                    "configuration": [
+                        {
+                            "key": "ibmcloud_api_key",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "region",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "us-south"
+                        },
+                        {
+                            "key": "prefix",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "devops-loop"
+                        },
+                        {
+                            "key": "resource_group_name",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "Default"
+                        },
+                        {
+                            "key": "devops_loop_domain",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "license_server",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "hcl_harbor_username",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "hcl_harbor_cli_secret",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "tls_certificate",
+                            "required": true,
+                            "type": "password",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "type": "multiline_secure_value"
+                            }
+                        },
+                        {
+                            "key": "tls_private_key",
+                            "required": true,
+                            "type": "password",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "type": "multiline_secure_value"
+                            }
+                        },
+                        {
+                            "key": "worker_flavor",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "bx2.8x32"
+                        },
+                        {
+                            "key": "worker_count",
+                            "required": false,
+                            "type": "int64",
+                            "default_value": 3
+                        },
+                        {
+                            "key": "kubernetes_version",
+                            "required": false,
+                            "type": "string",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "devops_loop_namespace",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "devops-loop"
+                        },
+                        {
+                            "key": "devops_loop_chart_version",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "1.0.3"
+                        },
+                        {
+                            "key": "emissary_chart_version",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "3.9.1"
+                        },
+                        {
+                            "key": "rwo_storage_class",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "ibmc-block-gold"
+                        },
+                        {
+                            "key": "rwx_storage_class",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "ibmc-file-gold-gid"
+                        },
+                        {
+                            "key": "smtp_host",
+                            "required": false,
+                            "type": "string",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "smtp_port",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "587"
+                        },
+                        {
+                            "key": "smtp_from_address",
+                            "required": false,
+                            "type": "string",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "smtp_username",
+                            "required": false,
+                            "type": "password",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "smtp_password",
+                            "required": false,
+                            "type": "password",
+                            "default_value": ""
+                        },
+                        {
+                            "key": "enable_plan",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_code",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_control",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_build",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_test",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_release",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_deploy",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_measure",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "tags",
+                            "required": false,
+                            "type": "list(string)",
+                            "default_value": []
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "key": "prefix",
+                            "description": "Prefix used to name all resources."
+                        },
+                        {
+                            "key": "region",
+                            "description": "IBM Cloud region of the deployment."
+                        },
+                        {
+                            "key": "cluster_id",
+                            "description": "ID of the IKS cluster."
+                        },
+                        {
+                            "key": "cluster_name",
+                            "description": "Name of the IKS cluster."
+                        },
+                        {
+                            "key": "vpc_id",
+                            "description": "ID of the VPC."
+                        },
+                        {
+                            "key": "devops_loop_namespace",
+                            "description": "Kubernetes namespace for DevOps Loop."
+                        },
+                        {
+                            "key": "devops_loop_domain",
+                            "description": "FQDN where DevOps Loop is accessible."
+                        },
+                        {
+                            "key": "enabled_capabilities",
+                            "description": "Map of enabled/disabled DevOps Loop capabilities."
+                        },
+                        {
+                            "key": "devops_loop_access_instructions",
+                            "description": "Post-deployment access and next-steps guide."
+                        }
+                    ],
+                    "iam_permissions": [
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Administrator"
+                            ],
+                            "service_name": "containers-kubernetes"
+                        },
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Administrator"
+                            ],
+                            "service_name": "is.vpc"
+                        },
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
+                            ],
+                            "service_name": "secrets-manager"
+                        },
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Editor"
+                            ],
+                            "service_name": "resource-controller"
+                        }
+                    ],
+                    "architecture": {
+                        "features": [
+                            {
+                                "title": "Creates new VPC and IKS cluster",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Installs Emissary-ingress (Ambassador) API gateway",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Deploys all 8 DevOps Loop capabilities",
+                                "description": "Configurable"
+                            },
+                            {
+                                "title": "Loop Genie AI assistant (IBM watsonx integration)",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Dual storage — RWO (Block) and RWX (File)",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "TLS via IBM Secrets Manager",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Role-based access control (RBAC + IBM IAM)",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Teamspace multi-tenancy",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Dashboards and real-time analytics",
+                                "description": "Yes"
+                            }
+                        ],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "caption": "IBM DevOps Loop on IKS — New Cluster flavor",
+                                    "url": "https://raw.githubusercontent.com/YOUR_ORG/devops-loop-iks-da/main/reference-architecture/devops-loop-on-iks.svg",
+                                    "metadata": []
+                                },
+                                "description": "This flavor provisions a new VPC, subnet, and IKS cluster, then installs Emissary-ingress as the API gateway and deploys IBM DevOps Loop via the OCI Helm chart from hclcr.io. Persistent storage is provided by IBM Cloud Block Storage (RWO) and File Storage (RWX). TLS is managed through IBM Secrets Manager. All eight SDLC capabilities — Plan, Code, Control, Build, Test, Release, Deploy, and Measure — are deployed in a dedicated Kubernetes namespace and can be individually toggled."
+                            }
+                        ]
+                    },
+                    "change_notices": {
+                        "new": [
+                            {
+                                "title": "Initial release",
+                                "description": "First release of IBM DevOps Loop on IKS deployable architecture targeting DevOps Loop chart version 1.0.3."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "label": "Existing Cluster",
+                    "name": "existing-cluster",
+                    "install_type": "fullstack",
+                    "working_directory": "solutions/devops-loop-on-iks",
+                    "usage_template": "module \"devops_loop_on_iks\" {\n  source                    = \"https://cm.globalcatalog.cloud.ibm.com/api/v1-beta/offering/source//${{workingDirectory}}?archive=tgz&catalogID=${{catalogID}}&flavor=${{flavor}}&kind=${{kind}}&name=${{name}}&version=${{version}}\"\n  ibmcloud_api_key          = var.ibmcloud_api_key\n  region                    = var.region\n  prefix                    = var.prefix\n  resource_group_name       = var.resource_group_name\n  existing_cluster_id       = var.existing_cluster_id\n  use_existing_vpc          = true\n  existing_vpc_name         = var.existing_vpc_name\n  existing_subnet_name      = var.existing_subnet_name\n  devops_loop_domain        = var.devops_loop_domain\n  license_server            = var.license_server\n  hcl_harbor_username       = var.hcl_harbor_username\n  hcl_harbor_cli_secret     = var.hcl_harbor_cli_secret\n  tls_certificate           = var.tls_certificate\n  tls_private_key           = var.tls_private_key\n}\n",
+                    "configuration": [
+                        {
+                            "key": "ibmcloud_api_key",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "region",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "us-south"
+                        },
+                        {
+                            "key": "prefix",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "devops-loop"
+                        },
+                        {
+                            "key": "resource_group_name",
+                            "required": true,
+                            "type": "string",
+                            "default_value": "Default"
+                        },
+                        {
+                            "key": "existing_cluster_id",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "existing_vpc_name",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "existing_subnet_name",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "devops_loop_domain",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "license_server",
+                            "required": true,
+                            "type": "string"
+                        },
+                        {
+                            "key": "hcl_harbor_username",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "hcl_harbor_cli_secret",
+                            "required": true,
+                            "type": "password"
+                        },
+                        {
+                            "key": "tls_certificate",
+                            "required": true,
+                            "type": "password",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "type": "multiline_secure_value"
+                            }
+                        },
+                        {
+                            "key": "tls_private_key",
+                            "required": true,
+                            "type": "password",
+                            "custom_config": {
+                                "grouping": "deployment",
+                                "original_grouping": "deployment",
+                                "type": "multiline_secure_value"
+                            }
+                        },
+                        {
+                            "key": "devops_loop_chart_version",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "1.0.3"
+                        },
+                        {
+                            "key": "rwo_storage_class",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "ibmc-block-gold"
+                        },
+                        {
+                            "key": "rwx_storage_class",
+                            "required": false,
+                            "type": "string",
+                            "default_value": "ibmc-file-gold-gid"
+                        },
+                        {
+                            "key": "enable_plan",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_code",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_control",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_build",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_test",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_release",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_deploy",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        },
+                        {
+                            "key": "enable_measure",
+                            "required": false,
+                            "type": "boolean",
+                            "default_value": true
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "key": "cluster_id",
+                            "description": "ID of the existing IKS cluster."
+                        },
+                        {
+                            "key": "devops_loop_namespace",
+                            "description": "Kubernetes namespace where DevOps Loop is deployed."
+                        },
+                        {
+                            "key": "devops_loop_domain",
+                            "description": "FQDN where DevOps Loop is accessible."
+                        },
+                        {
+                            "key": "devops_loop_access_instructions",
+                            "description": "Post-deployment access guide."
+                        }
+                    ],
+                    "iam_permissions": [
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Administrator"
+                            ],
+                            "service_name": "containers-kubernetes"
+                        },
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::role:Viewer"
+                            ],
+                            "service_name": "is.vpc"
+                        },
+                        {
+                            "role_crns": [
+                                "crn:v1:bluemix:public:iam::::serviceRole:Manager"
+                            ],
+                            "service_name": "secrets-manager"
+                        }
+                    ],
+                    "architecture": {
+                        "features": [
+                            {
+                                "title": "Uses an existing IKS cluster",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Installs Emissary-ingress (Ambassador) API gateway",
+                                "description": "Yes"
+                            },
+                            {
+                                "title": "Deploys all 8 DevOps Loop capabilities",
+                                "description": "Configurable"
+                            },
+                            {
+                                "title": "Creates new VPC or IKS cluster",
+                                "description": "No"
+                            },
+                            {
+                                "title": "Dual storage — RWO and RWX",
+                                "description": "Yes"
+                            }
+                        ],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "caption": "IBM DevOps Loop on IKS — Existing Cluster flavor",
+                                    "url": "https://raw.githubusercontent.com/YOUR_ORG/devops-loop-iks-da/main/reference-architecture/devops-loop-on-iks.svg",
+                                    "metadata": []
+                                },
+                                "description": "This flavor deploys IBM DevOps Loop into an existing IKS cluster. No VPC or cluster provisioning is performed. Only Kubernetes resources (namespaces, secrets, Emissary-ingress, and the DevOps Loop Helm release) are created."
+                            }
+                        ]
+                    },
+                    "change_notices": {
+                        "new": [
+                            {
+                                "title": "Initial release",
+                                "description": "First release supporting deployment into an existing IKS cluster."
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
